@@ -10,7 +10,7 @@ $ cd boostware
 $ yarn install | npm install
 ```
 
-# Setup Typescript and ts-node
+# Setup typescript and ts-node
 
 ```
 # global scope
