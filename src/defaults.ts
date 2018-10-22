@@ -9,9 +9,9 @@
 import { Verbosity, BoosterParams } from './types';
 
 /**
- * Default chucksize (unit: bytes)
+ * Default chucksize (unit: bytes - default 1 MiB = 2^20 or 1024 * 1024)
  */
-export const DefaultChuckSize = 1024 * 8;
+export const DefaultChuckSize = 1024 * 1024;
 
 /**
  * Default delay between retries (milliseconds)
