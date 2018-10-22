@@ -44,13 +44,13 @@ Usage: command <url> [-b [-msc]] [-o] [-v]
 
 Options:
   -V, --version                output the version number
-  -o, --output <n>             Path to save file to
-  -b, --boost                  Boost download multiple concurrent chunck fetch
-  -m, --max-chunks <n>         Total number of chunks to fetch
-  -s, --chunk-size <n>         Size of each chunk to fetch
-  -c, --concurrent-chunks <n>  Number of chunks fetched concurrently
-  -f, --force                  Overwrite if file already exists
-  -v, --verbosity <n>          Log verbosity (1,2,3)
+  -o, --output <n>             path to save file to
+  -b, --boost                  boost download multiple concurrent chunck fetch
+  -m, --max-chunks <n>         total number of chunks to fetch
+  -s, --chunk-size <n>         size of each chunk to fetch
+  -c, --concurrent-chunks <n>  number of chunks fetched concurrently
+  -f, --force                  overwrite if file already exists
+  -v, --verbosity <n>          log verbosity (1,2,3)
   -h, --help                   output usage information
 ```
 
@@ -83,32 +83,31 @@ Wrote [15, 17] to file.
 
 # How it works
 
-## boost (defaul: false)
-If the `-b,--boost` option is not selected, the file will be downloaed in one request and all other concurrency options are ignored.
+## boost (default: false)
+If the `-b,--boost` option is not selected, the file will be downloaded in one request and all other concurrency options are ignored.
 
-If the `-b --boost` is selected, then the command prepares itself for concurrent multi-chuck download.
+If the `-b --boost` is selected, then the command prepares itself for concurrent multi-chunk download.
 
-The options can be combined to optimize or one or more of `memory`, `cpu`, `network`, `io` and more.
+The `boost` options can be combined to optimize or one or more of `memory`, `cpu`, `network`, `io`, etc.
 
-## concurrent fetch groups (defaul: 4)
-For slower networks, `-c` option ensures that only <n> number of requests are made to the server, serving the file.
+## concurrent fetch groups (default: 4)
+For slower networks, `-c` option ensures that only a `fixed` number of requests are made to the server.
 
-The chunk downloads are all or none. with `-c` option, up-to <n> chunks are schedualed to be fetched in parallel. Each request individually retries 3 times to compensate for jittery networks. Each retry is pushed off with increasing delay time to ensure the network banddwidth is not affected with multiple retries.
+The chunk fetcher work on the `all or none` promise.
+With `-c` option, up-to `<n>` number of chunks are scheduled to be fetched in parallel. Each request individually retries `3` times to compensate for jittery networks. Each retry is pushed off with increasing delay time to ensure the network bandwidth is not affected with multiple retries.
 
 ## chunk size (default: 1MB)
 The `-s` option can be set for optimal chunk download speed.
 
 ## example
-To download a 400 MB file, we can have the `-s` set to 2MB chunck each. Then we set `-c` to 4 concurrent chucks to be fetched at a time.  This way, the client, scheudals the first 4 chucks of 2 MB in paraller. Once all those requests are on their way, the second batch of 4 are schedualled and so on, till all the file has been requested in multiple chunks.
+To download a 400 MB file, we can have the `-s` set to 2MB chunk each. Then we set `-c` to 4 concurrent chunks to be fetched at a time.  This way, the client, schedules the first 4 chunks of 2 MB in parallel. Once all those requests are on their way, the second batch of 4 is scheduled and so on ..., till the full file has been requested in multiple chunks.  Storing the chunks are fully `async`. `First come first saved`.
 
-# What next ...
-
-## Future roadmap
+## Future (roadmap)
 1. Tests
-3. Code coverage
-2. Continous Inegrations (CI)
-3. Packaged and pushed to npm.js
-4. More examples
+2. Code coverage
+3. Continuous Integrations (CI)
+4. Available on npm.js
+5. More examples
 
 # License
 
