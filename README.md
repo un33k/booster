@@ -40,7 +40,7 @@ $ node lib/command.js --help
 
 ```
 node lib/command.js --help
-Usage: command <url> [-o] [-b] [-msc]] [-f] [-v]
+Usage: command <url> [-o] [-b [-msc]] [-f] [-v]
 
 Options:
   -V, --version                output the version number

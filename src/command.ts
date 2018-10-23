@@ -86,7 +86,7 @@ async function main() {
  */
 program
   .version('0.1.0')
-  .usage('<url> [-b [-msc]] [-o] [-v]')
+  .usage('<url> [-o] [-b [-msc]] [-f] [-v]')
   .option('-o, --output <n>', 'path to save file to')
   .option('-b, --boost', 'boost download multiple concurrent chunk fetch')
   .option('-m, --max-chunks <n>', 'total number of chunks to fetch', parseInt)
