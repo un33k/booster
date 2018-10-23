@@ -40,7 +40,7 @@ $ node lib/command.js --help
 
 ```
 node lib/command.js --help
-Usage: command <url> [-b [-msc]] [-o] [-v]
+Usage: command <url> [-o] [-b [-msc]] [-f] [-v]
 
 Options:
   -V, --version                output the version number
@@ -88,25 +88,26 @@ If the `-b,--boost` option is not selected, the file will be downloaded in one r
 
 If the `-b --boost` is selected, then the command prepares itself for concurrent multi-chunk download.
 
-The `boost` options can be combined to optimize or one or more of `memory`, `cpu`, `network`, `io`, etc.
+The `boost` options can be combined to optimize one or more of `memory`, `cpu`, `network`, `io`, etc.
 
 ## concurrent fetch groups (default: 4)
-For slower networks, `-c` option ensures that only a `fixed` number of requests are made to the server.
+For slower networks, `-c` option ensures that only a `fixed` number of async requests are made to the server at a time.
 
-The chunk fetcher work on the `all or none` promise.
-With `-c` option, up-to `<n>` number of chunks are scheduled to be fetched in parallel. Each request individually retries `3` times to compensate for jittery networks. Each retry is pushed off with increasing delay time to ensure the network bandwidth is not affected with multiple retries.
+The chunk fetcher works on the `all or none` premise.
+With `-c` option, up-to `<n>` number of chunks are scheduled to be fetched in parallel. Each request individually retries `3` times to compensate for jittery networks. Each retry is pushed-off with increasing delay time to ensure the network bandwidth is not affected with multiple retries.
 
 ## chunk size (default: 1MB)
 The `-s` option can be set for optimal chunk download speed.
 
 ## example
-To download a 400 MB file, we can have the `-s` set to 2MB chunk each. Then we set `-c` to 4 concurrent chunks to be fetched at a time.  This way, the client, schedules the first 4 chunks of 2 MB in parallel. Once all those requests are on their way, the second batch of 4 is scheduled and so on ..., till the full file has been requested in multiple chunks.  Storing the chunks are fully `async`. `First come first saved`.
+To download a 400 MB file, we can have the `-s` set to 2MB chunk each. Then we set `-c` to 4 concurrent chunks to be fetched at a time.  This way, the client, schedules the first 4 chunks of 2 MB in parallel. Once all those requests are on their ways, the second batch of 4 is scheduled and so on ..., till the full file has been requested in multiple chunks.  Storing the chunks are fully `async`. First come first `saved` respecting the position and ordering of the chunks.
 
 ## Future (roadmap)
 1. Tests
 2. Code coverage
 3. Continuous Integrations (CI)
 4. Available on npm.js
+5. Support for more http(s) methods (PUT,POST,DELETE ..)
 5. More examples
 
 # License
